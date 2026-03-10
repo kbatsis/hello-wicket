@@ -1,22 +1,22 @@
 package com.example.hellowicket;
 
-import org.apache.wicket.MarkupContainer;
+import com.example.hellowicket.dto.EmployeeInsertDTO;
+import com.example.hellowicket.service.EmployeeServiceImpl;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-
-import java.util.List;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 public class AddEmployeeForm extends Form<Employee> {
     //private TextField idField;
     private TextField firstNameField;
     private TextField lastNameField;
-    private List<Employee> employees;
 
-    public AddEmployeeForm(String id, List<Employee> employees) {
+    @SpringBean
+    private EmployeeServiceImpl employeeService;
+
+    public AddEmployeeForm(String id) {
         super(id);
-        this.employees = employees;
 
         //idField = new TextField<Integer>("id", Model.of(0));
         firstNameField = new TextField<String>("firstName", Model.of(""));
@@ -33,10 +33,8 @@ public class AddEmployeeForm extends Form<Employee> {
         String firstName = (String) firstNameField.getModelObject();
         String lastName = (String) lastNameField.getModelObject();
 
-        Employee employeeToAdd = new Employee(null, firstName, lastName);
-        employees.add(employeeToAdd);
+        employeeService.addEmployee(new Employee(null, firstName, lastName));
 
-        ListPage listPage = new ListPage(employees);
-        setResponsePage(listPage);
+        setResponsePage(ListPage.class);
     }
 }

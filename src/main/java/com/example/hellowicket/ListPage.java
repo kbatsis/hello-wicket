@@ -1,5 +1,8 @@
 package com.example.hellowicket;
 
+import com.example.hellowicket.dto.EmployeeReadOnlyDTO;
+import com.example.hellowicket.repository.EmployeeRepository;
+import com.example.hellowicket.service.EmployeeServiceImpl;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -7,13 +10,16 @@ import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
-
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListPage extends WebPage {
-    public ListPage(List<Employee> employees) {
-        Employee employee;
+    @SpringBean
+    private EmployeeServiceImpl employeeService;
+
+    public ListPage() {
+        List<Employee> employees = employeeService.getAllEmployees();
 
         final DataView<Employee> dataView = new DataView<Employee>("employees", new ListDataProvider<>(employees)) {
             @Override
@@ -32,8 +38,7 @@ public class ListPage extends WebPage {
         add(new Link<Void>("addEmployee") {
             @Override
             public void onClick() {
-                AddEmployee addEmployee = new AddEmployee(employees);
-                setResponsePage(addEmployee);
+                setResponsePage(AddEmployee.class);
             }
         });
     }

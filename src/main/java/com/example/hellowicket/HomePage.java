@@ -25,7 +25,7 @@ public class HomePage extends WebPage {
        add(new Link<Void>("employeeListLink") {
            @Override
            public void onClick() {
-               ListPage listPage = new ListPage(employees);
+               ListPage listPage = new ListPage(    );
                setResponsePage(listPage);
            }
        });
