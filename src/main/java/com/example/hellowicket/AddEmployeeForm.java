@@ -9,7 +9,7 @@ import org.apache.wicket.model.Model;
 import java.util.List;
 
 public class AddEmployeeForm extends Form<Employee> {
-    private TextField idField;
+    //private TextField idField;
     private TextField firstNameField;
     private TextField lastNameField;
     private List<Employee> employees;
@@ -18,22 +18,22 @@ public class AddEmployeeForm extends Form<Employee> {
         super(id);
         this.employees = employees;
 
-        idField = new TextField<Integer>("id", Model.of(0));
+        //idField = new TextField<Integer>("id", Model.of(0));
         firstNameField = new TextField<String>("firstName", Model.of(""));
         lastNameField = new TextField<String>("lastName", Model.of(""));
 
-        add(idField);;
+        //add(idField);;
         add(firstNameField);
         add(lastNameField);
     }
 
     @Override
     protected void onSubmit() {
-        Integer id = (Integer) idField.getModelObject();
+        //Integer id = (Integer) idField.getModelObject();
         String firstName = (String) firstNameField.getModelObject();
         String lastName = (String) lastNameField.getModelObject();
 
-        Employee employeeToAdd = new Employee(id, firstName, lastName);
+        Employee employeeToAdd = new Employee(null, firstName, lastName);
         employees.add(employeeToAdd);
 
         ListPage listPage = new ListPage(employees);
