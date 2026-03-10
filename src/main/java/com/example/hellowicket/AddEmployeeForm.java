@@ -1,6 +1,5 @@
 package com.example.hellowicket;
 
-import com.example.hellowicket.dto.EmployeeInsertDTO;
 import com.example.hellowicket.service.EmployeeServiceImpl;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;

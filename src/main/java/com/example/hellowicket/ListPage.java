@@ -1,7 +1,5 @@
 package com.example.hellowicket;
 
-import com.example.hellowicket.dto.EmployeeReadOnlyDTO;
-import com.example.hellowicket.repository.EmployeeRepository;
 import com.example.hellowicket.service.EmployeeServiceImpl;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;

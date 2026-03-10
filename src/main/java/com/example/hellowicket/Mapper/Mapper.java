@@ -1,8 +1,6 @@
 package com.example.hellowicket.Mapper;
 
 import com.example.hellowicket.Employee;
-import com.example.hellowicket.dto.EmployeeInsertDTO;
-import com.example.hellowicket.dto.EmployeeReadOnlyDTO;
 import com.example.hellowicket.model.EmployeeEntity;
 
 public class Mapper {

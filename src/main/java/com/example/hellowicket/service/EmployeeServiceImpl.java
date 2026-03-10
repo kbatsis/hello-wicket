@@ -2,7 +2,6 @@ package com.example.hellowicket.service;
 
 import com.example.hellowicket.Employee;
 import com.example.hellowicket.Mapper.Mapper;
-import com.example.hellowicket.dto.EmployeeInsertDTO;
 import com.example.hellowicket.model.EmployeeEntity;
 import com.example.hellowicket.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
