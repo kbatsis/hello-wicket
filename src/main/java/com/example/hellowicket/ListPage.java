@@ -1,16 +1,16 @@
 package com.example.hellowicket;
 
-import com.example.hellowicket.service.EmployeeServiceImpl;
 import com.example.hellowicket.service.IEmployeeService;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class ListPage extends WebPage {
@@ -27,6 +27,19 @@ public class ListPage extends WebPage {
                 item.add(new Label("id", employee.getId()));
                 item.add(new Label("firstName", employee.getFirstName()));
                 item.add(new Label("lastName", employee.getLastName()));
+                item.add(new Link<Void>("editEmployee") {
+                    @Override
+                    public void onClick() {
+                        EditEmployee editEmployee = new EditEmployee(employee.getId(), employee.getFirstName(), employee.getLastName());
+                        setResponsePage(editEmployee);
+                    }
+                });
+                item.add(new Link<Void>("removeEmployee") {
+                    @Override
+                    public void onClick() {
+                        setResponsePage(AddEmployee.class);
+                    }
+                });
             }
         };
 
