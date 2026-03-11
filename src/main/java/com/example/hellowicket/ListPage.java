@@ -1,6 +1,7 @@
 package com.example.hellowicket;
 
 import com.example.hellowicket.service.EmployeeServiceImpl;
+import com.example.hellowicket.service.IEmployeeService;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -14,10 +15,12 @@ import java.util.List;
 
 public class ListPage extends WebPage {
     @SpringBean
-    private EmployeeServiceImpl employeeService;
+    private IEmployeeService employeeService;
 
     public ListPage() {
         List<Employee> employees = employeeService.getAllEmployees();
+
+        add(new Label("title", employees.getFirst().getLastName()));
 
         final DataView<Employee> dataView = new DataView<Employee>("employees", new ListDataProvider<>(employees)) {
             @Override

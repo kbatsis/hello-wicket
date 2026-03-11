@@ -1,36 +1,32 @@
 package com.example.hellowicket;
 
-import com.example.hellowicket.service.EmployeeServiceImpl;
+import com.example.hellowicket.service.IEmployeeService;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 public class AddEmployeeForm extends Form<Employee> {
-    //private TextField idField;
-    private TextField firstNameField;
-    private TextField lastNameField;
+    private final TextField<String> firstNameField;
+    private final TextField<String> lastNameField;
 
     @SpringBean
-    private EmployeeServiceImpl employeeService;
+    private IEmployeeService employeeService;
 
     public AddEmployeeForm(String id) {
         super(id);
 
-        //idField = new TextField<Integer>("id", Model.of(0));
-        firstNameField = new TextField<String>("firstName", Model.of(""));
-        lastNameField = new TextField<String>("lastName", Model.of(""));
+        firstNameField = new TextField<>("firstName", Model.of(""));
+        lastNameField = new TextField<>("lastName", Model.of(""));
 
-        //add(idField);;
         add(firstNameField);
         add(lastNameField);
     }
 
     @Override
     protected void onSubmit() {
-        //Integer id = (Integer) idField.getModelObject();
-        String firstName = (String) firstNameField.getModelObject();
-        String lastName = (String) lastNameField.getModelObject();
+        String firstName = firstNameField.getModelObject();
+        String lastName = lastNameField.getModelObject();
 
         employeeService.addEmployee(new Employee(null, firstName, lastName));
 
