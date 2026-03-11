@@ -20,9 +20,7 @@ public class ListPage extends WebPage {
     public ListPage() {
         List<Employee> employees = employeeService.getAllEmployees();
 
-        add(new Label("title", employees.getFirst().getLastName()));
-
-        final DataView<Employee> dataView = new DataView<Employee>("employees", new ListDataProvider<>(employees)) {
+        final DataView<Employee> dataView = new DataView<>("employees", new ListDataProvider<>(employees)) {
             @Override
             protected void populateItem(Item item) {
                 final Employee employee = (Employee) item.getModelObject();
