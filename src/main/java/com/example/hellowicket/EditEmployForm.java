@@ -5,6 +5,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 public class EditEmployForm extends Panel {
     private final TextField<Integer> idField;
@@ -12,6 +13,7 @@ public class EditEmployForm extends Panel {
     private final TextField<String> lastNameField;
     private final Form<Employee> employeeForm;
 
+    @SpringBean
     IEmployeeService employeeService;
 
     public EditEmployForm(String id, Integer employeeId, String firstName, String lastName) {
@@ -24,7 +26,7 @@ public class EditEmployForm extends Panel {
                 String firstName = firstNameField.getModelObject();
                 String lastName = lastNameField.getModelObject();
 
-                //employeeService.editEmployee(new Employee(id, firstName, lastName));
+                employeeService.editEmployee(new Employee(id, firstName, lastName));
 
                 setResponsePage(ListPage.class);
             }

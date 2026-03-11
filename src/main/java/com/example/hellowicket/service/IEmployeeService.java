@@ -8,4 +8,6 @@ import java.util.List;
 public interface IEmployeeService {
     List<Employee> getAllEmployees();
     EmployeeEntity addEmployee(Employee employee);
+    EmployeeEntity editEmployee(Employee employee);
+    void deleteEmployee(Integer id);
 }

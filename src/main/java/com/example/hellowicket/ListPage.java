@@ -37,7 +37,8 @@ public class ListPage extends WebPage {
                 item.add(new Link<Void>("removeEmployee") {
                     @Override
                     public void onClick() {
-                        setResponsePage(AddEmployee.class);
+                        employeeService.deleteEmployee(employee.getId());
+                        setResponsePage(ListPage.class);
                     }
                 });
             }

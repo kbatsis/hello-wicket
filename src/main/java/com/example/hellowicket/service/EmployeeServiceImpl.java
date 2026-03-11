@@ -36,4 +36,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public EmployeeEntity addEmployee(Employee employee) {
         return employeeRepository.save(Mapper.mapEmployeeToEntity(employee));
     }
+
+    @Override
+    public EmployeeEntity editEmployee(Employee employee) {
+        EmployeeEntity employeeToUpdate = employeeRepository.findById(employee.getId()).get();
+
+        employeeToUpdate.setFirstName(employee.getFirstName());
+        employeeToUpdate.setLastName(employee.getLastName());
+
+        return employeeRepository.save(employeeToUpdate);
+    }
+
+    @Override
+    public void deleteEmployee(Integer id) {
+        employeeRepository.deleteById(id);
+    }
 }
