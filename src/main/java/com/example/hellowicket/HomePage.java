@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Spliterator;
 
 @WicketHomePage
-public class HomePage extends WebPage {
+public class HomePage extends BasePage {
    public HomePage() {
        List<Employee> employees = new ArrayList<>();
 

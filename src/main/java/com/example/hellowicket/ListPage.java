@@ -1,7 +1,6 @@
 package com.example.hellowicket;
 
 import com.example.hellowicket.service.IEmployeeService;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
@@ -12,7 +11,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.util.List;
 
-public class ListPage extends WebPage {
+public class ListPage extends BasePage {
     @SpringBean
     private IEmployeeService employeeService;
 
@@ -29,8 +28,8 @@ public class ListPage extends WebPage {
                 item.add(new Link<Void>("editEmployee") {
                     @Override
                     public void onClick() {
-                        EditEmployee editEmployee = new EditEmployee(employee.getId());
-                        setResponsePage(editEmployee);
+                        EmployeePage employeePage = new EmployeePage(employee.getId());
+                        setResponsePage(employeePage);
                     }
                 });
                 item.add(new Link<Void>("removeEmployee") {
@@ -50,7 +49,7 @@ public class ListPage extends WebPage {
         add(new Link<Void>("addEmployee") {
             @Override
             public void onClick() {
-                setResponsePage(AddEmployee.class);
+                setResponsePage(EmployeePage.class);
             }
         });
     }
