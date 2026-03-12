@@ -3,7 +3,6 @@ package com.example.hellowicket;
 import com.example.hellowicket.service.IEmployeeService;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
@@ -30,7 +29,7 @@ public class ListPage extends WebPage {
                 item.add(new Link<Void>("editEmployee") {
                     @Override
                     public void onClick() {
-                        EditEmployee editEmployee = new EditEmployee(employee.getId(), employee.getFirstName(), employee.getLastName());
+                        EditEmployee editEmployee = new EditEmployee(employee.getId());
                         setResponsePage(editEmployee);
                     }
                 });

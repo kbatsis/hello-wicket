@@ -33,6 +33,16 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
+    public Employee getEmployeeById(Integer id) {
+        return Mapper.mapEmployeeEntityToEmployee(employeeRepository.findById(id).get());
+    }
+
+    @Override
+    public Employee createEmployee(Integer employeeId, String firstName, String lastName) {
+        return new Employee(employeeId, firstName, lastName);
+    }
+
+    @Override
     public EmployeeEntity addEmployee(Employee employee) {
         return employeeRepository.save(Mapper.mapEmployeeToEntity(employee));
     }
@@ -41,10 +51,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public EmployeeEntity editEmployee(Employee employee) {
         EmployeeEntity employeeToUpdate = employeeRepository.findById(employee.getId()).get();
 
-        employeeToUpdate.setFirstName(employee.getFirstName());
-        employeeToUpdate.setLastName(employee.getLastName());
-
-        return employeeRepository.save(employeeToUpdate);
+        return employeeRepository.save(Mapper.mapEmployeeEntityFields(employeeToUpdate, employee));
     }
 
     @Override

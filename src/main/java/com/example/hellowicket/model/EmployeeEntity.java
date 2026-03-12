@@ -15,13 +15,31 @@ public class EmployeeEntity {
     @Column(name = "LastName", length = 30, nullable = false)
     private String lastName;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fkEmployeeSupervisor")
+    private EmployeeEntity supervisor;
+
+    @Column(name = "Role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public EmployeeEntity() {
     }
 
-    public EmployeeEntity(Integer id, String firstName, String lastName) {
+    public EmployeeEntity(Integer id, String firstName, String lastName, EmployeeEntity supervisor, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.supervisor = supervisor;
+        this.role = role;
+    }
+
+    public EmployeeEntity getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(EmployeeEntity supervisor) {
+        this.supervisor = supervisor;
     }
 
     public Integer getId() {

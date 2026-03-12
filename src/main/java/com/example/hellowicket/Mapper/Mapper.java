@@ -7,10 +7,16 @@ public class Mapper {
     private Mapper() {}
 
     public static EmployeeEntity mapEmployeeToEntity(Employee employee) {
-        return new EmployeeEntity(null, employee.getFirstName(), employee.getLastName());
+        return new EmployeeEntity(null, employee.getFirstName(), employee.getLastName(), null, null);
     }
 
     public static Employee mapEmployeeEntityToEmployee(EmployeeEntity entity) {
         return new Employee(entity.getId(), entity.getFirstName(), entity.getLastName());
+    }
+
+    public static EmployeeEntity mapEmployeeEntityFields(EmployeeEntity entity, Employee employee) {
+        entity.setFirstName(employee.getFirstName());
+        entity.setLastName(employee.getLastName());
+        return entity;
     }
 }

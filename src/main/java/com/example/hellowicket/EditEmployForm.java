@@ -22,21 +22,19 @@ public class EditEmployForm extends Panel {
         employeeForm = new Form<>("editEmployeeForm") {
             @Override
             protected void onSubmit() {
-                //Integer id = idField.getModelObject();
                 String firstName = firstNameField.getModelObject();
                 String lastName = lastNameField.getModelObject();
 
-                employeeService.editEmployee(new Employee(employeeId, firstName, lastName));
+                Employee employee = employeeService.createEmployee(employeeId, firstName, lastName);
+                employeeService.editEmployee(employee);
 
                 setResponsePage(ListPage.class);
             }
         };
-        //idField = new TextField<>("idField", Model.of(employeeId));
         firstNameField = new TextField<>("firstName", Model.of(firstName));
         lastNameField = new TextField<>("lastName", Model.of(lastName));
 
         add(employeeForm);
-        //employeeForm.add(idField);
         employeeForm.add(firstNameField);
         employeeForm.add(lastNameField);
     }
