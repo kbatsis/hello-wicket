@@ -5,6 +5,7 @@ import com.example.hellowicket.Mapper.Mapper;
 import com.example.hellowicket.model.EmployeeEntity;
 import com.example.hellowicket.model.Role;
 import com.example.hellowicket.repository.EmployeeRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,21 +39,30 @@ public class EmployeeServiceImpl implements IEmployeeService {
         return Mapper.mapEmployeeEntityToEmployee(employeeRepository.findById(id).get());
     }
 
+    @Transactional
     @Override
-    public Employee createEmployee(Integer employeeId, String firstName, String lastName, EmployeeEntity supervisor, Role role) {
+    public Employee createEmployee(Integer employeeId, String firstName, String lastName, Employee supervisor, Role role) {
         return new Employee(employeeId, firstName, lastName, supervisor, role);
     }
 
+    @Transactional
     @Override
     public EmployeeEntity saveEmployee(Employee employee) {
-        if(employee.getId() == null) {
-            return employeeRepository.save(Mapper.mapEmployeeToEntity(employee));
+        EmployeeEntity supervisor = null;
+
+        if (employee.getSupervisor() != null ) {
+            supervisor = employeeRepository.findById(employee.getSupervisor().getId()).get();
+        }
+
+        if (employee.getId() == null) {
+            return employeeRepository.save(Mapper.mapEmployeeToEntity(employee, supervisor));
         }
 
         EmployeeEntity employeeToUpdate = employeeRepository.findById(employee.getId()).get();
-        return employeeRepository.save(Mapper.mapEmployeeEntityFields(employeeToUpdate, employee));
+        return employeeRepository.save(Mapper.mapEmployeeEntityFields(employeeToUpdate, employee, supervisor));
     }
 
+    @Transactional
     @Override
     public void deleteEmployee(Integer id) {
         employeeRepository.deleteById(id);

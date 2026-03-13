@@ -26,6 +26,12 @@ public class ListPage extends BasePage {
                 item.add(new Label("firstName", employee.getFirstName()));
                 item.add(new Label("lastName", employee.getLastName()));
                 item.add(new Label("role", employee.getRole()));
+
+                String supervisorLabel = null;
+                if (employee.getSupervisor() != null) {
+                    supervisorLabel = employee.getSupervisor().getFirstName() + " " + employee.getSupervisor().getLastName();
+                }
+                item.add(new Label("supervisor", supervisorLabel));
                 item.add(new Link<Void>("editEmployee") {
                     @Override
                     public void onClick() {

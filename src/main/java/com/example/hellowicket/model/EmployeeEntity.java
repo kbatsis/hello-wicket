@@ -1,6 +1,8 @@
 package com.example.hellowicket.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "Employee")
@@ -15,7 +17,7 @@ public class EmployeeEntity {
     @Column(name = "LastName", length = 30, nullable = false)
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fkEmployeeSupervisor")
     private EmployeeEntity supervisor;
 

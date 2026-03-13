@@ -9,10 +9,10 @@ public class Employee implements Serializable {
     private Integer id;
     private String firstName;
     private String lastName;
-    private EmployeeEntity supervisor;
+    private Employee supervisor;
     private Role role;
 
-    public Employee(Integer id, String firstName, String lastName, EmployeeEntity supervisor, Role role) {
+    public Employee(Integer id, String firstName, String lastName, Employee supervisor, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,6 +50,14 @@ public class Employee implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Employee getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Employee supervisor) {
+        this.supervisor = supervisor;
     }
 
     @Override
