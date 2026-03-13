@@ -25,6 +25,7 @@ public class ListPage extends BasePage {
                 item.add(new Label("id", employee.getId()));
                 item.add(new Label("firstName", employee.getFirstName()));
                 item.add(new Label("lastName", employee.getLastName()));
+                item.add(new Label("role", employee.getRole()));
                 item.add(new Link<Void>("editEmployee") {
                     @Override
                     public void onClick() {

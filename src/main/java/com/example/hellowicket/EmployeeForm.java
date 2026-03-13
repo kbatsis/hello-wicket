@@ -26,7 +26,7 @@ public class EmployeeForm extends Panel {
 
     public EmployeeForm(String id) {
         super(id);
-        employee= new Employee(null, "", "", null, Role.EMPLOYEE );
+        employee= new Employee(null, "", "", null, null);
         addComponents(employee);
     }
 

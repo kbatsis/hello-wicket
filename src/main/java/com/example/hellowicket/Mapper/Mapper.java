@@ -17,6 +17,7 @@ public class Mapper {
     public static EmployeeEntity mapEmployeeEntityFields(EmployeeEntity entity, Employee employee) {
         entity.setFirstName(employee.getFirstName());
         entity.setLastName(employee.getLastName());
+        entity.setRole(employee.getRole());
         return entity;
     }
 }
