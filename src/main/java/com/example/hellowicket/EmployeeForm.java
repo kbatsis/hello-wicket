@@ -16,7 +16,7 @@ import java.util.List;
 public class EmployeeForm extends Panel {
     private TextField<String> firstNameField;
     private TextField<String> lastNameField;
-    //private DropDownChoice<Role> roleDropDown;
+    private DropDownChoice<Role> roleDropDown;
     private Form<Employee> employeeForm;
 
     @SpringBean
@@ -26,7 +26,7 @@ public class EmployeeForm extends Panel {
 
     public EmployeeForm(String id) {
         super(id);
-        employee= new Employee(null, "", "");
+        employee= new Employee(null, "", "", null, Role.EMPLOYEE );
         addComponents(employee);
     }
 
@@ -42,23 +42,22 @@ public class EmployeeForm extends Panel {
             protected void onSubmit() {
                 String firstName = firstNameField.getModelObject();
                 String lastName = lastNameField.getModelObject();
+                Role role = roleDropDown.getModelObject();
 
-                Employee employeeInstance = employeeService.createEmployee(employee.getId(), firstName, lastName);
+                Employee employeeInstance = employeeService.createEmployee(employee.getId(), firstName, lastName, null, role);
                 employeeService.saveEmployee(employeeInstance);
 
                 setResponsePage(ListPage.class);
             }
         };
 
-        List<Role> roles = Arrays.stream(Role.values())
-                .toList();
         firstNameField = new TextField<>("firstName", Model.of(employee.getFirstName()));
         lastNameField = new TextField<>("lastName", Model.of(employee.getLastName()));
-        //roleDropDown = new DropDownChoice<>("role", Model.of(employee.getRole()), roles, new EnumChoiceRenderer<>(this));
+        roleDropDown = new DropDownChoice<Role>("role", Model.of(employee.getRole()), Arrays.asList(Role.values()), new EnumChoiceRenderer<>(this));
 
         add(employeeForm);
         employeeForm.add(firstNameField);
         employeeForm.add(lastNameField);
-        //employeeForm.add(roleDropDown);
+        employeeForm.add(roleDropDown);
     }
 }

@@ -3,6 +3,7 @@ package com.example.hellowicket.service;
 import com.example.hellowicket.Employee;
 import com.example.hellowicket.Mapper.Mapper;
 import com.example.hellowicket.model.EmployeeEntity;
+import com.example.hellowicket.model.Role;
 import com.example.hellowicket.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public Employee createEmployee(Integer employeeId, String firstName, String lastName) {
-        return new Employee(employeeId, firstName, lastName);
+    public Employee createEmployee(Integer employeeId, String firstName, String lastName, EmployeeEntity supervisor, Role role) {
+        return new Employee(employeeId, firstName, lastName, supervisor, role);
     }
 
     @Override
