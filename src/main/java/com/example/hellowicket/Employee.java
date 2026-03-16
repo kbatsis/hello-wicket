@@ -1,14 +1,27 @@
 package com.example.hellowicket;
 
 import com.example.hellowicket.model.Role;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.ScriptAssert;
 
 import java.io.Serializable;
 
+@ScriptAssert(lang = "groovy", alias = "_this", script = "_this.role.name() == 'CEO' ? _this.supervisor == null : _this.supervisor != null")
 public class Employee implements Serializable {
     private Integer id;
+
+    @NotNull
+    @Size(min = 1, max = 30)
     private String firstName;
+
+    @NotNull
+    @Size(min = 1, max = 30)
     private String lastName;
+
     private Supervisor supervisor;
+
+    @NotNull
     private Role role;
 
     public Employee(Integer id, String firstName, String lastName, Supervisor supervisor, Role role) {

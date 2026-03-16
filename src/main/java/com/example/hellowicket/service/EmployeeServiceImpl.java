@@ -6,16 +6,24 @@ import com.example.hellowicket.Supervisor;
 import com.example.hellowicket.model.EmployeeEntity;
 import com.example.hellowicket.model.Role;
 import com.example.hellowicket.repository.EmployeeRepository;
+import com.example.hellowicket.service.exception.EntityConstraintViolationException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class EmployeeServiceImpl implements IEmployeeService {
     private final EmployeeRepository employeeRepository;
+
+    @Autowired
+    private Validator validator;
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
@@ -61,7 +69,17 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Transactional
     @Override
-    public EmployeeEntity saveEmployee(Employee employee) {
+    public EmployeeEntity saveEmployee(Employee employee) throws EntityConstraintViolationException {
+        Set<ConstraintViolation<Employee>> violations = validator.validate(employee);
+
+        if (!violations.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (ConstraintViolation<Employee> constraintViolation : violations) {
+                sb.append(constraintViolation.getMessage());
+            }
+            throw new ConstraintViolationException("Error occurred: " + sb.toString(), violations);
+        }
+
         EmployeeEntity supervisor = null;
 
         if (employee.getSupervisor() != null ) {
@@ -73,6 +91,17 @@ public class EmployeeServiceImpl implements IEmployeeService {
         }
 
         EmployeeEntity employeeToUpdate = employeeRepository.findById(employee.getId()).get();
+        if ((employeeToUpdate.getRole() == Role.CEO || employeeToUpdate.getRole() == Role.MANAGER) && employee.getRole() == Role.EMPLOYEE) {
+            List<Employee> employees = getAllEmployees();
+
+            for (Employee employeeCurrent : employees) {
+                if (!employeeCurrent.getId().equals(employeeToUpdate.getId()) && employeeCurrent.getSupervisor() != null) {
+                    if (employeeCurrent.getSupervisor().getId().equals(employeeToUpdate.getId())) {
+                        throw new EntityConstraintViolationException();
+                    }
+                }
+            }
+        }
         return employeeRepository.save(Mapper.mapEmployeeEntityFields(employeeToUpdate, employee, supervisor));
     }
 
