@@ -46,16 +46,16 @@ public class EmployeeForm extends Panel {
         employeeForm = new Form<>("employeeForm", new CompoundPropertyModel<Employee>(employee)) {
             @Override
             protected void onSubmit() {
-                /*
+
                 String firstName = firstNameField.getModelObject();
                 String lastName = lastNameField.getModelObject();
                 Supervisor supervisor = supervisorDropDown.getModelObject();
                 Role role = roleDropDown.getModelObject();
-                */
 
-                //Employee employeeInstance = employeeService.createEmployee(employee.getId(), firstName, lastName, supervisor, role);
+
+                Employee employeeInstance = employeeService.createEmployee(employee.getId(), firstName, lastName, supervisor, role);
                 try {
-                    employeeService.saveEmployee(employeeForm.getModelObject());
+                    employeeService.saveEmployee(employeeInstance);
                 } catch (EntityConstraintViolationException e) {
                     throw new RuntimeException(e.getMessage());
                 }
@@ -65,8 +65,8 @@ public class EmployeeForm extends Panel {
         };
 
         firstNameField = new TextField<>("firstName");
-        lastNameField = new TextField<>("lastName", Model.of(employee.getLastName()));
-        roleDropDown = new DropDownChoice<>("role", Model.of(employee.getRole()), Arrays.asList(Role.values()), new EnumChoiceRenderer<>(this));
+        lastNameField = new TextField<>("lastName");
+        roleDropDown = new DropDownChoice<>("role", Arrays.asList(Role.values()), new EnumChoiceRenderer<>(this));
 
         List<Supervisor> supervisors = employeeService.getAllSupervisors();
         IModel<Supervisor> selectedSupervisorModel = new PropertyModel<>(this, "employee.getSupervisor()");

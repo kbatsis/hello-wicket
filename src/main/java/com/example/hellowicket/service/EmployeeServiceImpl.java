@@ -92,14 +92,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
         EmployeeEntity employeeToUpdate = employeeRepository.findById(employee.getId()).get();
         if ((employeeToUpdate.getRole() == Role.CEO || employeeToUpdate.getRole() == Role.MANAGER) && employee.getRole() == Role.EMPLOYEE) {
-            List<Employee> employees = getAllEmployees();
-
-            for (Employee employeeCurrent : employees) {
-                if (!employeeCurrent.getId().equals(employeeToUpdate.getId()) && employeeCurrent.getSupervisor() != null) {
-                    if (employeeCurrent.getSupervisor().getId().equals(employeeToUpdate.getId())) {
-                        throw new EntityConstraintViolationException();
-                    }
-                }
+            if (!employeeRepository.findBySupervisorEquals(employeeToUpdate).isEmpty()) {
+                throw new EntityConstraintViolationException();
             }
         }
         return employeeRepository.save(Mapper.mapEmployeeEntityFields(employeeToUpdate, employee, supervisor));
