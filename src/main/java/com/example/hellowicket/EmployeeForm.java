@@ -5,11 +5,13 @@ import com.example.hellowicket.service.IEmployeeService;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.StringValidator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,6 +79,15 @@ public class EmployeeForm extends Panel {
         employeeForm.add(lastNameField);
         employeeForm.add(roleDropDown);
         employeeForm.add(supervisorDropDown);
+
+        firstNameField.setRequired(true);
+        lastNameField.setRequired(true);
+        roleDropDown.setRequired(true);
+        firstNameField.add(new StringValidator(0, 30));
+        lastNameField.add(new StringValidator(0, 30));
+
+        FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+        employeeForm.add(feedbackPanel);
 
         supervisorDropDown.setRequired(true);
         supervisorDropDown.setOutputMarkupId(true);

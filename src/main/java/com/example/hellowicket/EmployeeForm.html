@@ -5,6 +5,11 @@
 <body>
 <wicket:panel>
 <form wicket:id="employeeForm">
+    <ul wicket:id="feedback" class="feedbackPanel">
+        <li class="feedbackPanelERROR">
+            <span class="feedbackPanelERROR">Field 'Username' is required.</span>
+        </li>
+    </ul>
     <fieldset>
         <span>Firstname: </span><input wicket:id="firstName" type="text" id="firstName" />
         <span>Lastname: </span><input wicket:id="lastName" type="text" id="lastName" />
