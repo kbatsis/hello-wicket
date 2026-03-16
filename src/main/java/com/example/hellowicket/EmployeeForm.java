@@ -18,7 +18,7 @@ public class EmployeeForm extends Panel {
     private TextField<String> firstNameField;
     private TextField<String> lastNameField;
     private DropDownChoice<Role> roleDropDown;
-    private DropDownChoice<Employee> supervisorDropDown;
+    private DropDownChoice<Supervisor> supervisorDropDown;
     private Form<Employee> employeeForm;
 
     @SpringBean
@@ -44,7 +44,7 @@ public class EmployeeForm extends Panel {
             protected void onSubmit() {
                 String firstName = firstNameField.getModelObject();
                 String lastName = lastNameField.getModelObject();
-                Employee supervisor = supervisorDropDown.getModelObject();
+                Supervisor supervisor = supervisorDropDown.getModelObject();
                 Role role = roleDropDown.getModelObject();
 
                 Employee employeeInstance = employeeService.createEmployee(employee.getId(), firstName, lastName, supervisor, role);
@@ -58,18 +58,17 @@ public class EmployeeForm extends Panel {
         lastNameField = new TextField<>("lastName", Model.of(employee.getLastName()));
         roleDropDown = new DropDownChoice<>("role", Model.of(employee.getRole()), Arrays.asList(Role.values()), new EnumChoiceRenderer<>(this));
 
-        List<Employee> employees = employeeService.getAllEmployees();
-
-        IModel<Employee> selectedSupervisorModel = new PropertyModel<>(this, "employee.getSupervisor()");
-        supervisorDropDown = new DropDownChoice<>("supervisor", selectedSupervisorModel, employees, new ChoiceRenderer<>() {
+        List<Supervisor> supervisors = employeeService.getAllSupervisors();
+        IModel<Supervisor> selectedSupervisorModel = new PropertyModel<>(this, "employee.getSupervisor()");
+        supervisorDropDown = new DropDownChoice<>("supervisor", selectedSupervisorModel, supervisors, new ChoiceRenderer<>() {
             @Override
-            public Object getDisplayValue(Employee employee) {
-                return employee.getFirstName() + " " + employee.getLastName();
+            public Object getDisplayValue(Supervisor supervisor) {
+                return supervisor.getFullName();
             }
 
             @Override
-            public String getIdValue(Employee employee, int index) {
-                return String.valueOf(employee.getId());
+            public String getIdValue(Supervisor supervisor, int index) {
+                return String.valueOf(supervisor.getId());
             }
         });
 
@@ -80,13 +79,21 @@ public class EmployeeForm extends Panel {
         employeeForm.add(supervisorDropDown);
 
         supervisorDropDown.setRequired(true);
+        supervisorDropDown.setOutputMarkupId(true);
+        if (employee.getRole() == Role.CEO) {
+            supervisorDropDown.setEnabled(false);
+        }
+
         roleDropDown.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
                 supervisorDropDown.setEnabled(true);
                 if (roleDropDown.getModelObject() == Role.CEO) {
                     supervisorDropDown.setEnabled(false);
+                    supervisorDropDown.setModelObject(null);
                 }
+
+                ajaxRequestTarget.add(supervisorDropDown);
             }
         });
     }

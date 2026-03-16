@@ -2,6 +2,7 @@ package com.example.hellowicket.service;
 
 import com.example.hellowicket.Employee;
 import com.example.hellowicket.Mapper.Mapper;
+import com.example.hellowicket.Supervisor;
 import com.example.hellowicket.model.EmployeeEntity;
 import com.example.hellowicket.model.Role;
 import com.example.hellowicket.repository.EmployeeRepository;
@@ -39,9 +40,22 @@ public class EmployeeServiceImpl implements IEmployeeService {
         return Mapper.mapEmployeeEntityToEmployee(employeeRepository.findById(id).get());
     }
 
+    @Override
+    public List<Supervisor> getAllSupervisors() {
+        List<EmployeeEntity> employees = employeeRepository.findAll();
+        List<Supervisor> supervisors = new ArrayList<>();
+
+        for (EmployeeEntity employeeEntity : employees) {
+            Supervisor supervisor = Mapper.mapEmployeeEntityToSupervisor(employeeEntity);
+            supervisors.add(supervisor);
+        }
+
+        return supervisors;
+    }
+
     @Transactional
     @Override
-    public Employee createEmployee(Integer employeeId, String firstName, String lastName, Employee supervisor, Role role) {
+    public Employee createEmployee(Integer employeeId, String firstName, String lastName, Supervisor supervisor, Role role) {
         return new Employee(employeeId, firstName, lastName, supervisor, role);
     }
 

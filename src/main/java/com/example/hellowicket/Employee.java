@@ -1,6 +1,5 @@
 package com.example.hellowicket;
 
-import com.example.hellowicket.model.EmployeeEntity;
 import com.example.hellowicket.model.Role;
 
 import java.io.Serializable;
@@ -9,10 +8,10 @@ public class Employee implements Serializable {
     private Integer id;
     private String firstName;
     private String lastName;
-    private Employee supervisor;
+    private Supervisor supervisor;
     private Role role;
 
-    public Employee(Integer id, String firstName, String lastName, Employee supervisor, Role role) {
+    public Employee(Integer id, String firstName, String lastName, Supervisor supervisor, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,11 +51,11 @@ public class Employee implements Serializable {
         this.role = role;
     }
 
-    public Employee getSupervisor() {
+    public Supervisor getSupervisor() {
         return supervisor;
     }
 
-    public void setSupervisor(Employee supervisor) {
+    public void setSupervisor(Supervisor supervisor) {
         this.supervisor = supervisor;
     }
 
@@ -66,6 +65,8 @@ public class Employee implements Serializable {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", supervisor=" + supervisor +
+                ", role=" + role +
                 '}';
     }
 }
