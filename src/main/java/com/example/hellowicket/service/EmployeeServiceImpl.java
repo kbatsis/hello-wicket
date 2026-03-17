@@ -62,6 +62,22 @@ public class EmployeeServiceImpl implements IEmployeeService {
         return supervisors;
     }
 
+    @Override
+    public List<Employee> getSubordinates(Employee employee) {
+        EmployeeEntity supervisor = null;
+        if (employee.getRole() != Role.CEO) {
+            supervisor = employeeRepository.findById(employee.getSupervisor().getId()).get();
+        }
+        List<EmployeeEntity> employeeEntities = employeeRepository.findBySupervisorEquals(Mapper.mapEmployeeToEntity(employee, supervisor));
+        List<Employee> subordinates = new ArrayList<>();
+
+        for (EmployeeEntity employeeEntity : employeeEntities) {
+            subordinates.add(Mapper.mapEmployeeEntityToEmployee(employeeEntity));
+        }
+
+        return subordinates;
+    }
+
     @Transactional
     @Override
     public Employee createEmployee(Integer employeeId, String firstName, String lastName, Supervisor supervisor, Role role) {

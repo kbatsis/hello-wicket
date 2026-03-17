@@ -1,5 +1,6 @@
 package com.example.hellowicket;
 
+import com.example.hellowicket.model.Role;
 import com.example.hellowicket.service.IEmployeeService;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -45,6 +46,22 @@ public class ListPage extends BasePage {
                         setResponsePage(ListPage.class);
                     }
                 });
+
+                item.add(new Link<Void>("listSubordinates") {
+                    @Override
+                    public void onClick() {
+                        SubordinatesPage subordinatesPage = new SubordinatesPage(employee);
+                        setResponsePage(subordinatesPage);
+                    }
+                    @Override
+                    public void onConfigure() {
+                        super.onConfigure();
+                        if (employee.getRole() == Role.EMPLOYEE) {
+                            setVisible(false);
+                        }
+                    }
+                });
+
             }
         };
 
@@ -58,5 +75,7 @@ public class ListPage extends BasePage {
                 setResponsePage(EmployeePage.class);
             }
         });
+
+
     }
 }
