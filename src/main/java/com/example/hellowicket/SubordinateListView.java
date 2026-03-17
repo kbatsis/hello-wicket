@@ -13,7 +13,7 @@ public class SubordinateListView extends ListView<Employee> {
     public SubordinateListView(String id, Employee supervisor) {
         super(id);
 
-        setList(employeeService.getSubordinates(supervisor));
+        setModel(() -> employeeService.getSubordinates(supervisor));
     }
 
     @Override
