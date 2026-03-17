@@ -6,7 +6,7 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import java.util.List;
 
 public class SupervisorDropDown extends DropDownChoice<Supervisor> {
-    public SupervisorDropDown(String id, List<? extends Supervisor> choices) {
+    public SupervisorDropDown(String id, List<Supervisor> choices) {
         super(id, choices, new ChoiceRenderer<>() {
             @Override
             public Object getDisplayValue(Supervisor supervisor) {
