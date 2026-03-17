@@ -11,10 +11,10 @@
         </li>
     </ul>
     <fieldset>
-        <span>Firstname: </span><input wicket:id="firstName" type="text" id="firstName" />
-        <span>Lastname: </span><input wicket:id="lastName" type="text" id="lastName" />
-        <span>Role: </span><select wicket:id="role"></select>
-        <span>Supervisor: </span><select wicket:id="supervisor"></select>
+        <label wicket:for="firstName"><wicket:label/></label> <input wicket:id="firstName" type="text" id="firstName" />
+        <label wicket:for="lastName"><wicket:label/></label> <input wicket:id="lastName" type="text" id="lastName" />
+        <label wicket:for="role"><wicket:label/></label> <select wicket:id="role"></select>
+        <label wicket:for="supervisor"><wicket:label/></label> <select wicket:id="supervisor"></select>
         <p>
             <input type="submit" name="submit" value="submit"/>
         </p>
