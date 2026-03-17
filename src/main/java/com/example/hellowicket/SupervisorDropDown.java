@@ -1,13 +1,21 @@
 package com.example.hellowicket;
 
+import com.example.hellowicket.service.IEmployeeService;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
-
-import java.util.List;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 public class SupervisorDropDown extends DropDownChoice<Supervisor> {
-    public SupervisorDropDown(String id, List<Supervisor> choices) {
-        super(id, choices, new ChoiceRenderer<>() {
+    @SpringBean
+    private IEmployeeService employeeService;
+
+    public SupervisorDropDown(String id, IModel<Employee> employeeModel) {
+        super(id);
+
+        setChoices(() -> employeeService.getSupervisors(employeeModel.getObject()));
+
+        setChoiceRenderer(new ChoiceRenderer<>() {
             @Override
             public Object getDisplayValue(Supervisor supervisor) {
                 return supervisor.getFullName();
@@ -18,5 +26,7 @@ public class SupervisorDropDown extends DropDownChoice<Supervisor> {
                 return String.valueOf(supervisor.getId());
             }
         });
+
+
     }
 }

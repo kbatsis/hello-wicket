@@ -12,11 +12,11 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class EmployeeForm extends Panel {
     private TextField<String> firstNameField;
@@ -47,15 +47,14 @@ public class EmployeeForm extends Panel {
             @Override
             protected void onSubmit() {
 
-                String firstName = firstNameField.getModelObject();
-                String lastName = lastNameField.getModelObject();
-                Supervisor supervisor = supervisorDropDown.getModelObject();
-                Role role = roleDropDown.getModelObject();
+//                String firstName = firstNameField.getModelObject();
+//                String lastName = lastNameField.getModelObject();
+//                Supervisor supervisor = supervisorDropDown.getModelObject();
+//                Role role = roleDropDown.getModelObject();
+//                Employee employeeInstance = employeeService.createEmployee(employee.getId(), firstName, lastName, supervisor, role);
 
-
-                Employee employeeInstance = employeeService.createEmployee(employee.getId(), firstName, lastName, supervisor, role);
                 try {
-                    employeeService.saveEmployee(employeeInstance);
+                    employeeService.saveEmployee(employee);
                 } catch (EntityConstraintViolationException e) {
                     throw new RuntimeException(e.getMessage());
                 }
@@ -67,8 +66,8 @@ public class EmployeeForm extends Panel {
         firstNameField = new TextField<>("firstName");
         lastNameField = new TextField<>("lastName");
         roleDropDown = new DropDownChoice<>("role", Arrays.asList(Role.values()), new EnumChoiceRenderer<>(this));
-        List<Supervisor> supervisors = employeeService.getSupervisors(employee);
-        supervisorDropDown = new SupervisorDropDown("supervisor", supervisors);
+        IModel<Employee> employeeModel = new CompoundPropertyModel<>(employee);
+        supervisorDropDown = new SupervisorDropDown("supervisor", employeeModel);
 
         add(employeeForm);
         employeeForm.add(firstNameField);
