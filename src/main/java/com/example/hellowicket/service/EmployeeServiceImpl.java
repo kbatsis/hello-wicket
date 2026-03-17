@@ -49,13 +49,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public List<Supervisor> getAllSupervisors() {
-        List<EmployeeEntity> employees = employeeRepository.findAll();
+    public List<Supervisor> getSupervisors(Employee employee) {
+        List<EmployeeEntity> supervisorEntities = employeeRepository.findByRoleIn(List.of(Role.CEO, Role.MANAGER));
         List<Supervisor> supervisors = new ArrayList<>();
 
-        for (EmployeeEntity employeeEntity : employees) {
-            Supervisor supervisor = Mapper.mapEmployeeEntityToSupervisor(employeeEntity);
-            supervisors.add(supervisor);
+        for (EmployeeEntity employeeEntity : supervisorEntities) {
+            if (!employeeEntity.getId().equals(employee.getId())) {
+                supervisors.add(Mapper.mapEmployeeEntityToSupervisor(employeeEntity));
+            }
         }
 
         return supervisors;

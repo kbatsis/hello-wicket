@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IEmployeeService {
     List<Employee> getAllEmployees();
-    List<Supervisor> getAllSupervisors();
+    List<Supervisor> getSupervisors(Employee employee);
     Employee getEmployeeById(Integer id);
     Employee createEmployee(Integer employeeId, String firstName, String lastName, Supervisor supervisor, Role role);
     EmployeeEntity saveEmployee(Employee employee) throws EntityConstraintViolationException;

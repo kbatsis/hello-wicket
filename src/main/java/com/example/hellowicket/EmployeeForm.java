@@ -5,13 +5,13 @@ import com.example.hellowicket.service.IEmployeeService;
 import com.example.hellowicket.service.exception.EntityConstraintViolationException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
-import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 
@@ -22,7 +22,7 @@ public class EmployeeForm extends Panel {
     private TextField<String> firstNameField;
     private TextField<String> lastNameField;
     private DropDownChoice<Role> roleDropDown;
-    private DropDownChoice<Supervisor> supervisorDropDown;
+    private SupervisorDropDown supervisorDropDown;
     private Form<Employee> employeeForm;
 
     @SpringBean
@@ -67,20 +67,8 @@ public class EmployeeForm extends Panel {
         firstNameField = new TextField<>("firstName");
         lastNameField = new TextField<>("lastName");
         roleDropDown = new DropDownChoice<>("role", Arrays.asList(Role.values()), new EnumChoiceRenderer<>(this));
-
-        List<Supervisor> supervisors = employeeService.getAllSupervisors();
-        IModel<Supervisor> selectedSupervisorModel = new PropertyModel<>(this, "employee.getSupervisor()");
-        supervisorDropDown = new DropDownChoice<>("supervisor", selectedSupervisorModel, supervisors, new ChoiceRenderer<>() {
-            @Override
-            public Object getDisplayValue(Supervisor supervisor) {
-                return supervisor.getFullName();
-            }
-
-            @Override
-            public String getIdValue(Supervisor supervisor, int index) {
-                return String.valueOf(supervisor.getId());
-            }
-        });
+        List<Supervisor> supervisors = employeeService.getSupervisors(employee);
+        supervisorDropDown = new SupervisorDropDown("supervisor", supervisors);
 
         add(employeeForm);
         employeeForm.add(firstNameField);
