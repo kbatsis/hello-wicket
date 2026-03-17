@@ -10,13 +10,21 @@
             <span class="feedbackPanelERROR">Field 'Username' is required.</span>
         </li>
     </ul>
-    <fieldset>
-        <label wicket:for="firstName"><wicket:label/></label> <input wicket:id="firstName" type="text" id="firstName" />
-        <label wicket:for="lastName"><wicket:label/></label> <input wicket:id="lastName" type="text" id="lastName" />
-        <label wicket:for="role"><wicket:label/></label> <select wicket:id="role"></select>
-        <label wicket:for="supervisor"><wicket:label/></label> <select wicket:id="supervisor"></select>
+    <fieldset class="row g-3">
+        <div class="col-md-6">
+            <label wicket:for="firstName" class="form-label"><wicket:label/></label> <input wicket:id="firstName" type="text" id="firstName" class="form-control"/>
+        </div>
+        <div class="col-md-6">
+            <label wicket:for="lastName" class="form-label"><wicket:label/></label> <input wicket:id="lastName" type="text" id="lastName" class="form-control"/>
+        </div>
+        <div class="col-md-6">
+            <label wicket:for="role" class="form-label"><wicket:label/></label> <select wicket:id="role" class="form-control"></select>
+        </div>
+        <div class="col-md-6">
+            <label wicket:for="supervisor" class="form-label"><wicket:label/></label> <select wicket:id="supervisor" class="form-control"></select>
+        </div>
         <p>
-            <input type="submit" name="submit" value="submit"/>
+            <input type="submit" name="submit" value="submit" class="btn btn-primary"/>
         </p>
     </fieldset>
 </form>
