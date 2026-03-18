@@ -76,10 +76,10 @@ public class EmployeeForm extends Panel {
         employeeForm.add(roleDropDown);
         employeeForm.add(supervisorDropDown);
 
-        firstNameField.setLabel(Model.of("Firstname:"));
-        lastNameField.setLabel(Model.of("Lastname:"));
-        roleDropDown.setLabel(Model.of("Role:"));
-        supervisorDropDown.setLabel(Model.of("Supervisor:"));
+        firstNameField.setLabel(Model.of(getString("firstname")));
+        lastNameField.setLabel(Model.of(getString("lastname")));
+        roleDropDown.setLabel(Model.of(getString("role")));
+        supervisorDropDown.setLabel(Model.of(getString("supervisor")));
 
         firstNameField.setRequired(true);
         lastNameField.setRequired(true);

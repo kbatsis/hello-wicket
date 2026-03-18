@@ -13,7 +13,7 @@ import java.util.Spliterator;
 @WicketHomePage
 public class HomePage extends BasePage {
    public HomePage() {
-       add(new Label("welcomeMessage", "Welcome"));
+       add(new Label("welcomeMessage", getString("welcome")));
 
        add(new Link<Void>("employeeListLink") {
            @Override

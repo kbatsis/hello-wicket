@@ -8,11 +8,11 @@
     <table class="dataview table">
         <tbody>
         <tr>
-            <th>Id</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Role</th>
-            <th>Supervisor</th>
+            <th><wicket:message key="id"></wicket:message></th>
+            <th><wicket:message key="firstname"></wicket:message></th>
+            <th><wicket:message key="lastname"></wicket:message></th>
+            <th><wicket:message key="role"></wicket:message></th>
+            <th><wicket:message key="supervisor"></wicket:message></th>
         </tr>
         <tr wicket:id="employees">
             <td><span wicket:id="id"></span></td>
@@ -20,12 +20,12 @@
             <td><span wicket:id="lastName"></span></td>
             <td><span wicket:id="role"></span></td>
             <td><span wicket:id="supervisor"></span></td>
-            <td><a href="#" wicket:id="editEmployee" class="btn btn-primary">Edit employee</a> <a href="#" wicket:id="removeEmployee" class="btn btn-primary">Remove employee</a> <a href="#" wicket:id="listSubordinates" class="btn btn-primary">List Subordinates</a></td>
+            <td><a href="#" wicket:id="editEmployee" class="btn btn-primary"><wicket:message key="editEmployee"></wicket:message></a> <a href="#" wicket:id="removeEmployee" class="btn btn-primary"><wicket:message key="removeEmployee"></wicket:message></a> <a href="#" wicket:id="listSubordinates" class="btn btn-primary"><wicket:message key="listSubordinates"></wicket:message></a></td>
         </tr>
         </tbody>
     </table>
     <div wicket:id="navigator"></div>
     <br>
-    <a href="#" wicket:id="addEmployee" class="btn btn-primary">Add employee</a>
+    <a href="#" wicket:id="addEmployee" class="btn btn-primary"><wicket:message key="addEmployee"></wicket:message></a>
 </body>
 </html>
