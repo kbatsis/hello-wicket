@@ -2,6 +2,7 @@ package com.example.hellowicket;
 
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 import java.util.Iterator;
 import java.util.List;
@@ -29,7 +30,7 @@ public class EmployeeDataProvider implements IDataProvider<Employee> {
 
     @Override
     public IModel<Employee> model(Employee employee) {
-        return null;
+        return Model.of(employee);
     }
 
     @Override
