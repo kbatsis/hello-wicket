@@ -3,19 +3,20 @@
     <title>Subordinates</title>
 </head>
 <body>
-<table class="subordinatesListView table">
-    <tbody>
-    <tr>
-        <th><wicket:message key="id"></wicket:message></th>
-        <th><wicket:message key="firstname"></wicket:message></th>
-        <th><wicket:message key="lastname"></wicket:message></th>
-    </tr>
-    <tr wicket:id="subordinates">
-        <td><span wicket:id="id"></span></td>
-        <td><span wicket:id="firstName"></span></td>
-        <td><span wicket:id="lastName"></span></td>
-    </tr>
-    </tbody>
-</table>
+<!--<table class="subordinatesListView table">-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--        <th><wicket:message key="id"></wicket:message></th>-->
+<!--        <th><wicket:message key="firstname"></wicket:message></th>-->
+<!--        <th><wicket:message key="lastname"></wicket:message></th>-->
+<!--    </tr>-->
+<!--    <tr wicket:id="subordinates">-->
+<!--        <td><span wicket:id="id"></span></td>-->
+<!--        <td><span wicket:id="firstName"></span></td>-->
+<!--        <td><span wicket:id="lastName"></span></td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<table wicket:id="subordinatesDataTable" class="table"></table>
 </body>
 </html>

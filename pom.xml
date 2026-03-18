@@ -76,6 +76,11 @@
             <version>5.0.4</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-extensions</artifactId>
+            <version>10.6.0</version>
+        </dependency>
     </dependencies>
 
     <build>

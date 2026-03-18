@@ -2,6 +2,8 @@ package com.example.hellowicket;
 
 import com.example.hellowicket.model.Role;
 import com.example.hellowicket.service.IEmployeeService;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.basic.EnumLabel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -9,9 +11,11 @@ import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListPage extends BasePage {
@@ -20,6 +24,13 @@ public class ListPage extends BasePage {
 
     public ListPage() {
         List<Employee> employees = employeeService.getAllEmployees();
+
+//        List<IColumn<Employee, String>> columns = new ArrayList<>();
+//        columns.add(new PropertyColumn<Employee, String>(new Model<String>("Id"), "firstName", "id"));
+//        columns.add(new PropertyColumn<Employee, String>(new Model<String>("First Name"), "firstName", "firstName"));
+//        columns.add(new PropertyColumn<Employee, String>(new Model<String>("Last Name"), "lastName"));
+//        columns.add(new PropertyColumn<Employee, String>(new Model<String>("Role"), "role"));
+
 
         final DataView<Employee> dataView = new DataView<>("employees", new ListDataProvider<>(employees)) {
             @Override
