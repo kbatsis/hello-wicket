@@ -2,12 +2,14 @@ package com.example.hellowicket;
 
 import com.example.hellowicket.model.Role;
 import com.example.hellowicket.service.IEmployeeService;
+import org.apache.wicket.markup.html.basic.EnumLabel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class ListPage extends BasePage {
                 item.add(new Label("id", employee.getId()));
                 item.add(new Label("firstName", employee.getFirstName()));
                 item.add(new Label("lastName", employee.getLastName()));
-                item.add(new Label("role", employee.getRole()));
+                item.add(new EnumLabel<>("role", employee.getRole()));
                 if (employee.getSupervisor() != null) {
                     item.add(new Label("supervisor", employee.getSupervisor().getFullName()));
                 } else {
@@ -46,6 +48,14 @@ public class ListPage extends BasePage {
                         setResponsePage(ListPage.class);
                     }
                 });
+
+                item.add(new Link<Void>("removeEmployeeWithSubordinates") {
+                    @Override
+                    public void onClick() {
+                        employeeService.deleteSupervisorWithSubordinates(employee);
+                        setResponsePage(ListPage.class);
+                    }
+                }.setBody(new ResourceModel("ListPage.removeEmployeeWithSubordinatesLabel")));
 
                 item.add(new Link<Void>("listSubordinates") {
                     @Override

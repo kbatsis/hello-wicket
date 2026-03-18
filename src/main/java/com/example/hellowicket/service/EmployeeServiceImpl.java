@@ -121,4 +121,17 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public void deleteEmployee(Integer id) {
         employeeRepository.deleteById(id);
     }
+
+    @Transactional
+    @Override
+    public void deleteSupervisorWithSubordinates(Employee employee) {
+        List<Employee> subordinates = getSubordinates(employee);
+        if (!subordinates.isEmpty()) {
+            for (Employee subordinate : subordinates) {
+                deleteSupervisorWithSubordinates(subordinate);
+            }
+        }
+
+        deleteEmployee(employee.getId());
+    }
 }

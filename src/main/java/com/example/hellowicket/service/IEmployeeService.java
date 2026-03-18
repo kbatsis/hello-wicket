@@ -16,4 +16,5 @@ public interface IEmployeeService {
     Employee createEmployee(Integer employeeId, String firstName, String lastName, Supervisor supervisor, Role role);
     EmployeeEntity saveEmployee(Employee employee) throws EntityConstraintViolationException;
     void deleteEmployee(Integer id);
+    void deleteSupervisorWithSubordinates(Employee employee);
 }
