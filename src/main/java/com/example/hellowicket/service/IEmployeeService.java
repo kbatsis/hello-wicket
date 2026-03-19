@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 public interface IEmployeeService {
-    List<Employee> getAllEmployees();
+    List<Employee> getAllEmployees(PageRequest pageRequest);
     List<Supervisor> getSupervisors(Employee employee);
     List<Employee> getSubordinates(Employee employee, PageRequest pageRequest);
     Employee getEmployeeById(Integer id);
@@ -19,4 +19,5 @@ public interface IEmployeeService {
     void deleteEmployee(Integer id);
     void deleteSupervisorWithSubordinates(Employee employee);
     long countSubordinates(Employee supervisor);
+    long countEmployees();
 }

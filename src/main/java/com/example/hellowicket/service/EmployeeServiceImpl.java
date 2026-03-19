@@ -12,6 +12,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
-        List<EmployeeEntity> employeeEntities = employeeRepository.findAll();
+    public List<Employee> getAllEmployees(PageRequest pageRequest) {
+        Page<EmployeeEntity> employeeEntities = employeeRepository.findAll(pageRequest);
         List<Employee> employees = new ArrayList<>();
 
         for (EmployeeEntity employeeEntity : employeeEntities) {
@@ -134,6 +135,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
         }
 
         deleteEmployee(employee.getId());
+    }
+
+    @Override
+    public long countEmployees() {
+        return employeeRepository.count();
     }
 
     @Override

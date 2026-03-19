@@ -5,27 +5,28 @@
     <title>Hello Wicket</title>
 </head>
 <body>
-    <table class="dataview table">
-        <tbody>
-        <tr>
-            <th><wicket:message key="id"></wicket:message></th>
-            <th><wicket:message key="firstname"></wicket:message></th>
-            <th><wicket:message key="lastname"></wicket:message></th>
-            <th><wicket:message key="role"></wicket:message></th>
-            <th><wicket:message key="supervisor"></wicket:message></th>
-        </tr>
-        <tr wicket:id="employees">
-            <td><span wicket:id="id"></span></td>
-            <td><span wicket:id="firstName"></span></td>
-            <td><span wicket:id="lastName"></span></td>
-            <td><span wicket:id="role"></span></td>
-            <td><span wicket:id="supervisor"></span></td>
-            <td><a href="#" wicket:id="editEmployee" class="btn btn-primary"><wicket:message key="editEmployee"></wicket:message></a> <a href="#" wicket:id="removeEmployee" class="btn btn-primary"><wicket:message key="removeEmployee"></wicket:message></a> <a href="#" wicket:id="removeEmployeeWithSubordinates" class="btn btn-primary"></a> <a href="#" wicket:id="listSubordinates" class="btn btn-primary"><wicket:message key="listSubordinates"></wicket:message></a></td>
-        </tr>
-        </tbody>
-    </table>
-    <div wicket:id="navigator"></div>
-    <br>
+<table wicket:id="employeesDataTable" class="table"></table>
+<!--    <table class="dataview table">-->
+<!--        <tbody>-->
+<!--        <tr>-->
+<!--            <th><wicket:message key="id"></wicket:message></th>-->
+<!--            <th><wicket:message key="firstname"></wicket:message></th>-->
+<!--            <th><wicket:message key="lastname"></wicket:message></th>-->
+<!--            <th><wicket:message key="role"></wicket:message></th>-->
+<!--            <th><wicket:message key="supervisor"></wicket:message></th>-->
+<!--        </tr>-->
+<!--        <tr wicket:id="employees">-->
+<!--            <td><span wicket:id="id"></span></td>-->
+<!--            <td><span wicket:id="firstName"></span></td>-->
+<!--            <td><span wicket:id="lastName"></span></td>-->
+<!--            <td><span wicket:id="role"></span></td>-->
+<!--            <td><span wicket:id="supervisor"></span></td>-->
+<!--            <td><a href="#" wicket:id="editEmployee" class="btn btn-primary"><wicket:message key="editEmployee"></wicket:message></a> <a href="#" wicket:id="removeEmployee" class="btn btn-primary"><wicket:message key="removeEmployee"></wicket:message></a> <a href="#" wicket:id="removeEmployeeWithSubordinates" class="btn btn-primary"></a> <a href="#" wicket:id="listSubordinates" class="btn btn-primary"><wicket:message key="listSubordinates"></wicket:message></a></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--    <div wicket:id="navigator"></div>-->
+<!--    <br>-->
     <a href="#" wicket:id="addEmployee" class="btn btn-primary"><wicket:message key="addEmployee"></wicket:message></a>
 </body>
 </html>

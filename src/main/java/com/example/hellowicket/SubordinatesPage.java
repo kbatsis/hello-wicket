@@ -30,7 +30,6 @@ public class SubordinatesPage extends BasePage {
         SubordinatesDataProvider dataProvider = new SubordinatesDataProvider(supervisor, pageNumber, 10);
         DataTable<Employee, String> subordinatesDataTable = new DataTable<>("subordinatesDataTable", columns, dataProvider, 10);
         subordinatesDataTable.addTopToolbar(new HeadersToolbar<>(subordinatesDataTable, null));
-        subordinatesDataTable.addBottomToolbar(new NavigationToolbar(subordinatesDataTable));
         add(subordinatesDataTable);
 
         add(new Link<Void>("previousPage") {
