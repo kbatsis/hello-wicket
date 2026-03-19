@@ -12,6 +12,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -63,12 +64,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public List<Employee> getSubordinates(Employee employee) {
+    public List<Employee> getSubordinates(Employee employee, PageRequest pageRequest) {
         EmployeeEntity supervisor = null;
         if (employee.getRole() != Role.CEO) {
             supervisor = employeeRepository.findById(employee.getSupervisor().getId()).get();
         }
-        List<EmployeeEntity> employeeEntities = employeeRepository.findBySupervisorEquals(Mapper.mapEmployeeToEntity(employee, supervisor));
+        List<EmployeeEntity> employeeEntities = employeeRepository.findBySupervisorEquals(Mapper.mapEmployeeToEntity(employee, supervisor), pageRequest);
         List<Employee> subordinates = new ArrayList<>();
 
         for (EmployeeEntity employeeEntity : employeeEntities) {
@@ -109,7 +110,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
         EmployeeEntity employeeToUpdate = employeeRepository.findById(employee.getId()).get();
         if ((employeeToUpdate.getRole() == Role.CEO || employeeToUpdate.getRole() == Role.MANAGER) && employee.getRole() == Role.EMPLOYEE) {
-            if (!employeeRepository.findBySupervisorEquals(employeeToUpdate).isEmpty()) {
+            if (!employeeRepository.findBySupervisorEquals(employeeToUpdate, PageRequest.of(0, 10)).isEmpty()) {
                 throw new EntityConstraintViolationException();
             }
         }
@@ -125,7 +126,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Transactional
     @Override
     public void deleteSupervisorWithSubordinates(Employee employee) {
-        List<Employee> subordinates = getSubordinates(employee);
+        List<Employee> subordinates = getSubordinates(employee, PageRequest.of(0, 10));
         if (!subordinates.isEmpty()) {
             for (Employee subordinate : subordinates) {
                 deleteSupervisorWithSubordinates(subordinate);
@@ -133,5 +134,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
         }
 
         deleteEmployee(employee.getId());
+    }
+
+    @Override
+    public long countSubordinates(Employee supervisor) {
+        EmployeeEntity supervisorEntity = employeeRepository.findById(supervisor.getId()).get();
+
+        return employeeRepository.countBySupervisorEquals(supervisorEntity);
     }
 }

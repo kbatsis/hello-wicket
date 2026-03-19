@@ -71,7 +71,7 @@ public class ListPage extends BasePage {
                 item.add(new Link<Void>("listSubordinates") {
                     @Override
                     public void onClick() {
-                        SubordinatesPage subordinatesPage = new SubordinatesPage(employee);
+                        SubordinatesPage subordinatesPage = new SubordinatesPage(employee, 0);
                         setResponsePage(subordinatesPage);
                     }
                     @Override
