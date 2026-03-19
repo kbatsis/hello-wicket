@@ -22,7 +22,7 @@ public class SubordinatesDataProvider implements IDataProvider<Employee> {
     public SubordinatesDataProvider(Employee supervisor, int pageNumber, int pageSize) {
         this.supervisor = supervisor;
         Injector.get().inject(this);
-        supervisors = getSubordinatesPaginated(pageNumber, 3);
+        supervisors = getSubordinatesPaginated(pageNumber, 10);
     }
 
     @Override
