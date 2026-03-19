@@ -1,6 +1,8 @@
 package com.example.hellowicket;
 
 import com.example.hellowicket.service.IEmployeeService;
+import jakarta.inject.Inject;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -16,6 +18,7 @@ public class SubordinatesDataProvider implements IDataProvider<Employee> {
     private final List<Employee> supervisors;
 
     public SubordinatesDataProvider(Employee supervisor) {
+        Injector.get().inject(this);
         supervisors = employeeService.getSubordinates(supervisor);
     }
 
