@@ -20,7 +20,8 @@ public class LinkPanelRemoveEmployee extends Panel {
                 Employee employee = rowModel.getObject();
 
                 employeeService.deleteEmployee(employee.getId());
-                setResponsePage(ListPage.class);
+                ListPage listPage = new ListPage(0);
+                setResponsePage(listPage);
             }
         }.setBody(new ResourceModel("removeEmployee")));
     }

@@ -20,7 +20,8 @@ public class LinkPanelRemoveEmployeeWithSubordinates extends Panel {
                 Employee employee = rowModel.getObject();
 
                 employeeService.deleteSupervisorWithSubordinates(employee);
-                setResponsePage(ListPage.class);
+                ListPage listPage = new ListPage(0);
+                setResponsePage(listPage);
             }
         }.setBody(new ResourceModel("ListPage.removeEmployeeWithSubordinatesLabel")));
     }

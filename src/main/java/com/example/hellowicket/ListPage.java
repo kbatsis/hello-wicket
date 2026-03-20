@@ -4,10 +4,10 @@ import com.example.hellowicket.service.IEmployeeService;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.util.ArrayList;
@@ -17,7 +17,10 @@ public class ListPage extends BasePage {
     @SpringBean
     private IEmployeeService employeeService;
 
-    public ListPage() {
+    private int pageNumber;
+
+    public ListPage(int pageNumber) {
+        this.pageNumber = pageNumber;
         List<IColumn<Employee, String>> columns = new ArrayList<>();
 
         columns.add(new PropertyColumn<>(new Model<>("Id"), "id"));
@@ -30,7 +33,7 @@ public class ListPage extends BasePage {
         columns.add(new LinkColumn<>(Model.of(""), "LinkPanelRemoveEmployeeWithSubordinates"));
         columns.add(new LinkColumn<>(Model.of(""), "LinkPanelListSubordinates"));
 
-        EmployeeDataProvider dataProvider = new EmployeeDataProvider(0, 10);
+        EmployeeDataProvider dataProvider = new EmployeeDataProvider(pageNumber, 10);
         DataTable<Employee, String> employeesDataTable = new DataTable<>("employeesDataTable", columns, dataProvider, 10);
         employeesDataTable.addTopToolbar(new HeadersToolbar<>(employeesDataTable, null));
         add(employeesDataTable);
@@ -100,6 +103,31 @@ public class ListPage extends BasePage {
             }
         });
 
+        add(new Link<Void>("previousPage") {
+            @Override
+            public void onClick() {
+                reducePageByOne();
+            }
+        }.setBody(new ResourceModel("ListPage.previous")));
 
+        add(new Link<Void>("nextPage") {
+            @Override
+            public void onClick() {
+                increasePageByOne();
+            }
+        }.setBody(new ResourceModel("ListPage.next")));
+    }
+    private void reducePageByOne() {
+        if (pageNumber > 0) {
+            pageNumber--;
+        }
+        ListPage listPage = new ListPage(pageNumber);
+        setResponsePage(listPage);
+    }
+
+    private void increasePageByOne() {
+        pageNumber++;
+        ListPage listPage = new ListPage(pageNumber);
+        setResponsePage(listPage);
     }
 }
