@@ -10,8 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Integer> {
-    Page<EmployeeEntity> findAll(Pageable page);
-    List<EmployeeEntity> findBySupervisorEquals(EmployeeEntity supervisor, PageRequest pageRequest);
+    Page<EmployeeEntity> findBySupervisorEquals(EmployeeEntity supervisor, Pageable page);
     List<EmployeeEntity> findByRoleIn(List<Role> roles);
     long countBySupervisorEquals(EmployeeEntity supervisor);
 }

@@ -12,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import java.util.Iterator;
 
 public class EmployeeDataProvider implements IDataProvider<Employee> {
+    private static final int PAGE_SIZE = 10;
+
     @SpringBean
     IEmployeeService employeeService;
 
@@ -36,12 +38,11 @@ public class EmployeeDataProvider implements IDataProvider<Employee> {
 
     @Override
     public Iterator<? extends Employee> iterator(long first, long count) {
-        int offset = (int) (first / count);
-        int size = (int) count;
+        int offset = (int) (first / PAGE_SIZE);
 
         Sort sort = Sort.by("id").ascending();
 
-        return employeeService.getAllEmployees(PageRequest.of(offset, size, sort)).iterator();
+        return employeeService.getAllEmployees(PageRequest.of(offset, PAGE_SIZE, sort)).iterator();
     }
 
     @Override

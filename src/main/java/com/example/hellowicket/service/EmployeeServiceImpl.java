@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
         Page<EmployeeEntity> employeeEntities = employeeRepository.findAll(pageRequest);
         List<Employee> employees = new ArrayList<>();
 
-        for (EmployeeEntity employeeEntity : employeeEntities) {
+        for (EmployeeEntity employeeEntity : employeeEntities.getContent()) {
             Employee employee = Mapper.mapEmployeeEntityToEmployee(employeeEntity);
             employees.add(employee);
         }
@@ -70,7 +70,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
         if (employee.getRole() != Role.CEO) {
             supervisor = employeeRepository.findById(employee.getSupervisor().getId()).get();
         }
-        List<EmployeeEntity> employeeEntities = employeeRepository.findBySupervisorEquals(Mapper.mapEmployeeToEntity(employee, supervisor), pageRequest);
+        Page<EmployeeEntity> employeeEntities = employeeRepository.findBySupervisorEquals(Mapper.mapEmployeeToEntity(employee, supervisor), pageRequest);
         List<Employee> subordinates = new ArrayList<>();
 
         for (EmployeeEntity employeeEntity : employeeEntities) {

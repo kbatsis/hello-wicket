@@ -8,6 +8,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 public class SubordinatesDataProvider implements IDataProvider<Employee> {
     @SpringBean
     private IEmployeeService employeeService;
+
+    private static final int PAGE_SIZE = 10;
 
     private final Employee supervisor;
 
@@ -25,7 +28,11 @@ public class SubordinatesDataProvider implements IDataProvider<Employee> {
 
     @Override
     public Iterator<? extends Employee> iterator(long first, long count) {
-        return employeeService.getSubordinates(supervisor, PageRequest.of((int) first, (int) count)).iterator();
+        int offset = (int) (first / PAGE_SIZE);
+
+        Sort sort = Sort.by("id").ascending();
+
+        return employeeService.getSubordinates(supervisor, PageRequest.of(offset, PAGE_SIZE, sort)).iterator();
     }
 
     @Override
