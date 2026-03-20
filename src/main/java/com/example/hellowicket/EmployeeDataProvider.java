@@ -7,19 +7,16 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.Iterator;
-import java.util.List;
 
 public class EmployeeDataProvider implements IDataProvider<Employee> {
     @SpringBean
     IEmployeeService employeeService;
 
-    private final List<Employee> employees;
-
-    public EmployeeDataProvider(int pageNumber, int pageSize) {
+    public EmployeeDataProvider() {
         Injector.get().inject(this);
-        employees = employeeService.getAllEmployees(PageRequest.of(pageNumber, pageSize));
     }
 
     @Override
@@ -38,12 +35,13 @@ public class EmployeeDataProvider implements IDataProvider<Employee> {
     }
 
     @Override
-    public Iterator<? extends Employee> iterator(long l, long l1) {
-        long toIndex = l + l1;
-        if (toIndex > employees.size()) {
-            toIndex = employees.size();
-        }
-        return employees.subList((int) l, (int) toIndex).iterator();
+    public Iterator<? extends Employee> iterator(long first, long count) {
+        int offset = (int) (first / count);
+        int size = (int) count;
+
+        Sort sort = Sort.by("id").ascending();
+
+        return employeeService.getAllEmployees(PageRequest.of(offset, size, sort)).iterator();
     }
 
     @Override

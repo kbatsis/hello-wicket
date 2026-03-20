@@ -60,7 +60,7 @@ public class EmployeeForm extends Panel {
                     throw new RuntimeException(e.getMessage());
                 }
 
-                ListPage listPage = new ListPage(0);
+                ListPage listPage = new ListPage();
                 setResponsePage(listPage);
             }
         };

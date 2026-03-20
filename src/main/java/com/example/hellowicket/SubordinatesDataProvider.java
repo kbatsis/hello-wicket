@@ -17,21 +17,15 @@ public class SubordinatesDataProvider implements IDataProvider<Employee> {
     private IEmployeeService employeeService;
 
     private final Employee supervisor;
-    private final List<Employee> supervisors;
 
-    public SubordinatesDataProvider(Employee supervisor, int pageNumber, int pageSize) {
+    public SubordinatesDataProvider(Employee supervisor) {
         this.supervisor = supervisor;
         Injector.get().inject(this);
-        supervisors = getSubordinatesPaginated(pageNumber, pageSize);
     }
 
     @Override
-    public Iterator<? extends Employee> iterator(long l, long l1) {
-        long toIndex = l + l1;
-        if (toIndex > supervisors.size()) {
-            toIndex = supervisors.size();
-        }
-        return supervisors.subList((int) l, (int) toIndex).iterator();
+    public Iterator<? extends Employee> iterator(long first, long count) {
+        return employeeService.getSubordinates(supervisor, PageRequest.of((int) first, (int) count)).iterator();
     }
 
     @Override
@@ -47,9 +41,5 @@ public class SubordinatesDataProvider implements IDataProvider<Employee> {
     @Override
     public void detach() {
         IDataProvider.super.detach();
-    }
-
-    private List<Employee> getSubordinatesPaginated(int page, int size) {
-        return employeeService.getSubordinates(supervisor, PageRequest.of(page, size));
     }
 }
