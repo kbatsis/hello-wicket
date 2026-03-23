@@ -14,6 +14,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 
@@ -77,10 +78,10 @@ public class EmployeeForm extends Panel {
         employeeForm.add(roleDropDown);
         employeeForm.add(supervisorDropDown);
 
-        firstNameField.setLabel(Model.of(getString("firstname")));
-        lastNameField.setLabel(Model.of(getString("lastname")));
-        roleDropDown.setLabel(Model.of(getString("role")));
-        supervisorDropDown.setLabel(Model.of(getString("supervisor")));
+        firstNameField.setLabel(new ResourceModel("firstname"));
+        lastNameField.setLabel(new ResourceModel("lastname"));
+        roleDropDown.setLabel(new ResourceModel("role"));
+        supervisorDropDown.setLabel(new ResourceModel("supervisor"));
 
         firstNameField.setRequired(true);
         lastNameField.setRequired(true);
